@@ -163,6 +163,8 @@ mysqli_close($connection);
 ?>
 
  </div>
+ 
+</div>
 
 <div class="sample">
   <h1 align="center"> Hindi to English Translation </h1>
@@ -288,7 +290,6 @@ function myFunction() {
 
 mysqli_close($connection);
 ?>
-</div>
 
 </div>
  <img src="image1.gif" alt="Image">
