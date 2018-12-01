@@ -14,9 +14,14 @@
   
      $my ="INSERT INTO Words(english,Hinglish,Hindi) VALUES('$English', '$Hinglish', '$Hindi')";
      $connectq->query($my);
+echo "<h1>";
 
-
+echo "Thank You for your response";
+echo "<br>";
+echo "Word has been added do the database";
+echo "</h1>";
 mysqli_close($connectq);
-echo "<script> location.href='index.php'; </script>";
+header( "refresh:2;url=index.php" );
+// echo "<script> location.href='index.php'; </script>";
 
 ?>

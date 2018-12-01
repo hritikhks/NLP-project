@@ -13,6 +13,14 @@
 
 
 mysqli_close($connectq);
-echo "<script> location.href='index.php'; </script>";
+echo "<h1>";
+
+echo "Thank You for your response";
+echo "<br>";
+echo "sentence has been added do the database";
+echo "</h1>";
+mysqli_close($connectq);
+header( "refresh:2;url=index.php" );
+//echo "<script> location.href='index.php'; </script>";
 
 ?>
