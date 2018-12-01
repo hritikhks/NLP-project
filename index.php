@@ -26,7 +26,10 @@ mysqli_close($conn1);
 
 <html>
 
-  <div id="navbar"><h1 align="center">IIT Dharwad Translator</h1>
+  <div id="navbar">
+   <img src="imglogo.png" height="100" width="175" alt="Image">
+
+    <h1 align="center">IIT Dharwad Translator</h1>
   </div>
 
 
@@ -76,21 +79,8 @@ mysqli_close($conn1);
                         Meaning in Hindi:<input type= "text" value="" name='Hindi'> -->
                         <button id="sub">Translate</button>
 </form>
+<img src="image1.gif" alt="Image">
 
-  <h1 align="center"> Add words to databases </h1>
-  <form id="myform" action="add.php" method="post">
-                        English Word:<input type="text" value="" name='English'>
-                        Pronounciation in Hindi :<input type="text" value="" name='Hinglish'>
-                        Meaning in Hindi:<input type= "text" value="" name='Hindi'>
-                        <button id="sub">ADD</button>
-</form>
-
- <h1 align="center"> Add Sentences to databases </h1>
-  <form id="myform" action="add2.php" method="post">
-                        English Word:<input type="text" value="" name='english'>
-                        Sentence:<input type="text" value="" name='sntc'>
-                        <button id="sub">ADD</button>
-</form>
 
 
  <?php
@@ -163,7 +153,7 @@ mysqli_close($connection);
 ?>
 
  </div>
- 
+
 </div>
 
 <div class="sample">
@@ -185,6 +175,7 @@ $all_property = array();
 
 
 $find = 0;
+$arr=array();
 //showing all data
 while ($row = mysqli_fetch_array($result)) {
     echo "<tr>";
@@ -203,14 +194,75 @@ while ($row = mysqli_fetch_array($result)) {
       echo '</h3>';
       break;
     }
-  }
 
+    else if(strtolower($inhin[0]) == strtolower($b[0]) && $inhin !=""){
+      $b_len = strlen($inhin);
+      if($b_len > strlen($b)){
+
+        $b_len = strlen($b);
+      }
+      $count = 1;
+      
+      for ($x = 1; $x < $b_len-1 ; $x++) {
+        if($inhin[$x] == $b[$x] || $$inhin[$x] == $b[$x -1] || $inhin[$x] == $b[$x+1]){
+          $count = $count + 1;
+        }
+        //echo $b[$x];
+      }
+      if($count >2){
+        array_push($arr, $b);
+      }
+    }
+
+  }
+  if($find == 0 && sizeof($arr) > 0){
+    echo "<h3>";
+    echo "Entered word is not present ";
+    echo "<br>";
+    echo "Few suggested words are -";
+    echo "<br>";
+    echo "<br>";
+    for($z = 0; $z < sizeof($arr); $z++){
+      echo $arr[$z];
+      echo "<br>";
+    }
+    echo "</h3>";
+  }
+ 
   if($find == 0 && $inhin !=""){
-    echo ' <textarea id="transliterateTextarea" style="width:500px;height:150px"></textarea>';
+    echo "<br>";
+    echo "To see transliteration click on the text box below";
+    echo "<br>";
+    echo ' <textarea id="transliterateTextarea" style="width:500px;height:100px"></textarea>';
+    echo "<br>";
     echo "<script>document.getElementById('transliterateTextarea').value += '" .$inhin . "'  </script>";
-
   }
 
+  mysqli_close($connection);
+
+?>
+
+
+</div>
+<div class ="addword">
+   <h1 align="center"> Add words to databases </h1>
+  <form id="myform" action="add.php" method="post">
+                        English Word:<input type="text" value="" name='English'>
+                        Pronounciation in Hindi :<input type="text" value="" name='Hinglish'>
+                        Meaning in Hindi:<input type= "text" value="" name='Hindi'>
+                        <button id="sub">ADD</button>
+</form>
+<br>
+
+ <h1 align="center"> Add Sentences to databases </h1>
+  <form id="myform" action="add2.php" method="post">
+                        English Word:<input type="text" value="" name='english' > <br> <br>
+                        Sentence:<input type="text" value="" name='sntc' style="width:500px;height:100px"> <br>
+                        <button id="sub">ADD</button>
+</form>
+</div>
+</body>
+<?php
 echo "<style>
 h2 , h3 {
     text-align: center;
@@ -219,36 +271,49 @@ h2 , h3 {
 
 #navbar {
   overflow: hidden;
-  background-color: #66a3ff;
+  background-color: #009999;
 }
 
 .container{
-  display: flex;
-    justify-content: center;
-      background-color : #b3e0ff;
-
+  display: block;
+  justify-content: center;
+  background-color : ccebff;
+  height:400px;
+  width: 100%;
+  
 }
 
+.addword {
+  background-color : #00b3b3;
+  height:550px;
+  width:100%;
+  padding-top: 50px;
+  text-align: center;
 }
 
 .content {
+  float : left;
   padding: 16px;
-  background-color : #b3ecff;
+  display:block;
+  background-color : #ccebff;
   color : #000a1a;
   text-align: center;
-  width: 50%;
-  height : 100vh; 
-  float: left;
+  height:400px;
+  width: 100%;
 
-  scroll-snap-align: start;
 
+}
+
+img {
+  float : left;
+  padding-top: -20px;
 }
 
 .sample {
   background-color : #b3ecff;
   color : #000a1a;
   text-align: center;
-  height : 100vh;
+  height:550px;
   padding-top: 60px;
  
 
@@ -264,11 +329,8 @@ h2 , h3 {
 .sticky + .content {
   padding-top: 60px;
 }
-img {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
+
+
 
 </style>";
 
@@ -288,10 +350,8 @@ function myFunction() {
 }
 </script>' ;
 
-mysqli_close($connection);
 ?>
 
-</div>
- <img src="image1.gif" alt="Image">
-</body>
 
+
+</html>
